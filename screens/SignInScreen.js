@@ -11,8 +11,7 @@ const SignInScreen = ({ navigation }) => {
   const handleSignIn = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then(() => {
-        console.log('User signed in!');
-        // Navigate to Chat screen later
+        navigation.replace('Chat');
       })
       .catch((err) => setError(err.message));
   };
