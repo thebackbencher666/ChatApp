@@ -1,26 +1,25 @@
 // UsersListScreen.js
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
-import { collection, onSnapshot } from 'firebase/firestore';
+import { collection, getDocs, onSnapshot } from 'firebase/firestore';
 import { auth, db } from '../firebase';
 import { useNavigation } from '@react-navigation/native';
 
-const UsersListScreen = () => {
+const UsersListScreen = ({navigation}) => {
   const [users, setUsers] = useState([]);
   const navigation = useNavigation();
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(collection(db, 'users'), (snapshot) => {
-      const usersData = snapshot.docs
-        .map(doc => ({
-          id: doc.id,
-          ...doc.data(),
-        }))
-        .filter(user => user.id !== auth.currentUser.uid); // Exclude yourself
-      setUsers(usersData);
-    });
+    const fetchUsers = async () => {
+        const usersCollection = collection(db, 'users');
+        const userSnapshot = await getDocs(usersCollection);
+        const userList = userSnapshot.docs
+            .map((doc) => ({ id: doc.id, ...doc.data() }))
+            .filter((user) => user.email !== auth.currentUser.email);
+        setUsers(userList);
+    };
 
-    return unsubscribe;
+    fetchUsers();
   }, []);
 
   const handleUserPress = (user) => {
@@ -38,13 +37,16 @@ const UsersListScreen = () => {
       <FlatList 
         data={users}
         keyExtractor={(item) => item.id}
-        renderItem={renderItem}
+        renderItem={({ item }) => (
+            <TouchableOpacity style = {styles.userItem} onPress={() => handleUserPress(item)}>
+                <text>{item.email}</text>
+            </TouchableOpacity>
+        )}
       />
     </View>
   );
 };
 
-export default UsersListScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -61,3 +63,5 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
 });
+
+export default UsersListScreen;
