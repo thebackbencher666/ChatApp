@@ -11,7 +11,7 @@ const SignInScreen = ({ navigation }) => {
   const handleSignIn = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then(() => {
-        navigation.replace('Chat');
+        navigation.replace('UsersListScreen'); // Navigate to UsersListScreen after successful sign-in
       })
       .catch((err) => setError(err.message));
   };

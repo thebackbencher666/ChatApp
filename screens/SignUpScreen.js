@@ -11,10 +11,11 @@ const SignUpScreen = ({ navigation }) => {
   const handleSignUp = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then(() => {
-        console.log('User signed up!');
-        // Optional: Navigate to chat or sign-in screen
+        navigation.replace('UsersListScreen'); // ✅ Navigate after signup
       })
-      .catch((err) => setError(err.message));
+      .catch((error) => {
+        setError(error.message); // ✅ Corrected 'error', not 'err'
+      });
   };
 
   return (
