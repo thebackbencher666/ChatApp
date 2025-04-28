@@ -13,7 +13,7 @@ const SignInScreen = ({ navigation }) => {
       .then(() => {
         navigation.replace('UsersListScreen'); // Navigate to UsersListScreen after successful sign-in
       })
-      .catch((err) => setError(err.message));
+      .catch((error) => setError(error.message));
   };
 
   return (
