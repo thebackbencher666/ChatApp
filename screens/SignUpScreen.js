@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, TextInput, Button, Text, StyleSheet } from 'react-native';
 import { auth } from '../firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import saveUserToFirestore from '../utils/saveUserToFirestore'; // 🔁 This handles Firestore save
 
 const SignUpScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -10,11 +11,12 @@ const SignUpScreen = ({ navigation }) => {
 
   const handleSignUp = () => {
     createUserWithEmailAndPassword(auth, email, password)
-      .then(() => {
+      .then(async () => {
+        await saveUserToFirestore(); // ✅ Save user to Firestore
         navigation.replace('UsersListScreen'); // ✅ Navigate after signup
       })
       .catch((error) => {
-        setError(error.message); // ✅ Corrected 'error', not 'err'
+        setError(error.message);
       });
   };
 

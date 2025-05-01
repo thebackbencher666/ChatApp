@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, TextInput, Button, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase';
+import saveUserToFirestore from '../utils/saveUserToFirestore'; 
 
 const SignInScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -11,6 +12,7 @@ const SignInScreen = ({ navigation }) => {
   const handleSignIn = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then(() => {
+        saveUserToFirestore(); // Save user to Firestore
         navigation.replace('UsersListScreen'); // Navigate to UsersListScreen after successful sign-in
       })
       .catch((error) => setError(error.message));

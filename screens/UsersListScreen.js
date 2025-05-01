@@ -13,7 +13,8 @@ const UsersListScreen = ({ navigation }) => {
       const userSnapshot = await getDocs(usersCollection);
       const userList = userSnapshot.docs
         .map((doc) => ({ id: doc.id, ...doc.data() }))
-        .filter((user) => user.email !== auth.currentUser.email);
+        .filter((u) => u.id !== auth.currentUser.uid);
+        
       setUsers(userList);
     };
 
