@@ -50,7 +50,7 @@ ChatApp/ ├── App.js ├── firebase.js ├── screens/ │ ├──
 
 5. Replace the config inside `firebase.js`:
 
-```js
+
 // firebase.js
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
@@ -91,8 +91,14 @@ Type and send messages — they’ll be stored in Firestore
 
 Use the Logout button to exit
 
-Note: You must sign up with at least two users to test chatting.
+Note: You must sign up with at least two users to test chatting.//
 
-
-
+## 📸 Screenshots
+<img src="./screenshots/1.jpg" width="300">
+<img src="./screenshots/2.jpg" width="300">
+<img src="./screenshots/3.jpg" width="300">
+<img src="./screenshots/4.jpg" width="300">
+<img src="./screenshots/5.jpg" width="300">
+<img src="./screenshots/6.jpg" width="300">
+<img src="./screenshots/7.jpg" width="300">
 
